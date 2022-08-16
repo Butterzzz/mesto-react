@@ -1,12 +1,11 @@
-import logo from './logo.svg';
-import './App.css';
+import logo from './images/header-logo.svg';
 
 function App() {
   return (
     <body className="page">
 
       <header className="header">
-        <img className="header__logo" src="<%=require('./images/header-logo.svg')%>" alt="Логотип сервиса Mesto" />
+        <img className="header__logo" src={logo} alt="Логотип сервиса Mesto" />
       </header>
 
       <main className="content">
