@@ -23,6 +23,12 @@ function App() {
     setIsAddPlacePopupOpen(true);
   }
 
+  function closeAllPopups() {
+    setIsEditAvatarPopupOpen(false);
+    setIsEditProfilePopupOpen(false);
+    setIsAddPlacePopupOpen(false);
+  }
+
   return (
     <div className="page">
 
@@ -38,6 +44,7 @@ function App() {
 
       <PopupWithForm
         isOpen={isEditAvatarPopupOpen}
+        onClose={closeAllPopups}
         name={'avatar'}
         form={'editAvatar'}
         title={'Обновить аватар'}
@@ -54,6 +61,7 @@ function App() {
 
       <PopupWithForm
         isOpen={isEditProfilePopupOpen}
+        onClose={closeAllPopups}
         name={'edit-profile'}
         form={'editProfile'}
         title={'Редактировать профиль'}
@@ -74,6 +82,7 @@ function App() {
 
       <PopupWithForm
         isOpen={isAddPlacePopupOpen}
+        onClose={closeAllPopups}
         name={'add-card'}
         form={'addCard'}
         title={'Новое место'}
