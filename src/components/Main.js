@@ -18,8 +18,8 @@ function Main(props) {
             })
             .catch((err) => { console.log(err) })
         api.getInitialCards()
-            .then((data) => {
-                setCards(data);
+            .then((card) => {
+                setCards(card);
             })
             .catch((err) => { console.log(err) })
     }, [])
@@ -50,9 +50,11 @@ function Main(props) {
                     {cards.map((card, id) => (
                         <Card
                             key={id}
+                            card={card}
                             name={card.name}
                             link={card.link}
                             likes={card.likes.length}
+                            onCardClick={props.onCardClick}
                         />
                     ))}
                 </ul>
