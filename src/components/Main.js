@@ -1,11 +1,12 @@
 import React from 'react';
-import {api} from '../utils/api';
+import { api } from '../utils/api';
 
 function Main(props) {
 
     const [userName, setUserName] = React.useState();
     const [userDescription, setUserDescription] = React.useState();
     const [userAvatar, setUserAvatar] = React.useState();
+    const [cards, setCards] = React.useState([]);
 
     React.useEffect(() => {
         api.getUserInfo()
@@ -13,6 +14,11 @@ function Main(props) {
                 setUserName(res.name);
                 setUserDescription(res.about);
                 setUserAvatar(res.avatar)
+            })
+            .catch((err) => { console.log(err) })
+        api.getInitialCards()
+            .then((data) => {
+                setCards(data);
             })
             .catch((err) => { console.log(err) })
     }, [])
@@ -39,6 +45,22 @@ function Main(props) {
 
             <section className="cards" aria-label="Карточки мест">
                 <ul className="cards__list">
+
+                    {cards.map((card, i) => (
+                        <li className="cards__item" key={card.id}>
+                            <article className="card">
+                                <img className="card__image" src={card.link} alt={card.name} />
+                                <div className="card__description">
+                                    <h2 className="card__title">{card.name}</h2>
+                                    <div className="card__like-container">
+                                        <button className="card__button card__button_action_like" type="button" aria-label="Поставить лайк"></button>
+                                        <div className="card__like-counter">{card.likes.length}</div>
+                                    </div>
+                                </div>
+                                <button className="card__button card__button_action_delete" type="button" aria-label="Удалить карточку"></button>
+                            </article>
+                        </li>
+                    ))}
 
                 </ul>
             </section>
