@@ -1,15 +1,15 @@
-import React from 'react';
+import { useEffect, useState } from 'react';
 import { api } from '../utils/api';
 import Card from "./Card";
 
-function Main(props) {
+function Main({ onEditProfile, onAddPlace, onEditAvatar, onCardClick }) {
 
-    const [userName, setUserName] = React.useState();
-    const [userDescription, setUserDescription] = React.useState();
-    const [userAvatar, setUserAvatar] = React.useState();
-    const [cards, setCards] = React.useState([]);
+    const [userName, setUserName] = useState('');
+    const [userDescription, setUserDescription] = useState('');
+    const [userAvatar, setUserAvatar] = useState('');
+    const [cards, setCards] = useState([]);
 
-    React.useEffect(() => {
+    useEffect(() => {
         api.getUserInfo()
             .then((res) => {
                 setUserName(res.name);
@@ -30,31 +30,31 @@ function Main(props) {
             <section className="profile">
 
                 <img className="profile__image" src={userAvatar} alt="Изображение профиля" />
-                <button className="profile__button profile__button_action_edit-avatar" type="button" aria-label="Редактировать аватар" onClick={props.onEditAvatar}></button>
+                <button className="profile__button profile__button_action_edit-avatar" type="button" aria-label="Редактировать аватар" onClick={onEditAvatar}></button>
 
                 <div className="profile__info">
                     <h1 className="profile__name">{userName}</h1>
                     <button className="profile__button profile__button_action_edit" type="button"
-                        aria-label="Редактировать профиль" onClick={props.onEditProfile}></button>
+                        aria-label="Редактировать профиль" onClick={onEditProfile}></button>
                     <p className="profile__about">{userDescription}</p>
                 </div>
 
                 <button className="profile__button profile__button_action_add" type="button"
-                    aria-label="Добавить фотографию" onClick={props.onAddPlace}></button>
+                    aria-label="Добавить фотографию" onClick={onAddPlace}></button>
 
             </section>
 
             <section className="cards" aria-label="Карточки мест">
                 <ul className="cards__list">
 
-                    {cards.map((card, id) => (
+                    {cards.map((card) => (
                         <Card
-                            key={id}
+                            key={card._id}
                             card={card}
                             name={card.name}
                             link={card.link}
                             likes={card.likes.length}
-                            onCardClick={props.onCardClick}
+                            onCardClick={onCardClick}
                         />
                     ))}
                 </ul>

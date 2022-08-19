@@ -10,7 +10,7 @@ function App() {
   const [isEditAvatarPopupOpen, setIsEditAvatarPopupOpen] = React.useState(false);
   const [isEditProfilePopupOpen, setIsEditProfilePopupOpen] = React.useState(false);
   const [isAddPlacePopupOpen, setIsAddPlacePopupOpen] = React.useState(false);
-  const [selectedCard, setSelectedCard] = React.useState();
+  const [selectedCard, setSelectedCard] = React.useState(null);
 
   function handleEditAvatarClick() {
     setIsEditAvatarPopupOpen(true);
@@ -55,16 +55,12 @@ function App() {
         name={'avatar'}
         form={'editAvatar'}
         title={'Обновить аватар'}
-        buttonText={'Сохранить'}
-        children={(
-          <>
-            <fieldset className="popup__input-container">
-              <input className="popup__input" type="url" name="avatar" id="avatar" placeholder="Ссылка на аватар" required />
-              <span className="popup__error avatar-input-error"></span>
-            </fieldset>
-          </>
-        )}
-      />
+        buttonText={'Сохранить'}>
+        <fieldset className="popup__input-container">
+          <input className="popup__input" type="url" name="avatar" id="avatar" placeholder="Ссылка на аватар" required />
+          <span className="popup__error avatar-input-error"></span>
+        </fieldset>
+      </PopupWithForm>
 
       <PopupWithForm
         isOpen={isEditProfilePopupOpen}
@@ -72,20 +68,16 @@ function App() {
         name={'edit-profile'}
         form={'editProfile'}
         title={'Редактировать профиль'}
-        buttonText={'Сохранить'}
-        children={(
-          <>
-            <fieldset className="popup__input-container">
-              <input className="popup__input" type="text" name="name" id="name-input" minLength="2" maxLength="40"
-                placeholder="Имя" required />
-              <span className="popup__error name-input-error"></span>
-              <input className="popup__input" type="text" name="about" id="about-input" minLength="2" maxLength="200"
-                placeholder="О себе" required />
-              <span className="popup__error about-input-error"></span>
-            </fieldset>
-          </>
-        )}
-      />
+        buttonText={'Сохранить'}>
+        <fieldset className="popup__input-container">
+          <input className="popup__input" type="text" name="name" id="name-input" minLength="2" maxLength="40"
+            placeholder="Имя" required />
+          <span className="popup__error name-input-error"></span>
+          <input className="popup__input" type="text" name="about" id="about-input" minLength="2" maxLength="200"
+            placeholder="О себе" required />
+          <span className="popup__error about-input-error"></span>
+        </fieldset>
+      </PopupWithForm>
 
       <PopupWithForm
         isOpen={isAddPlacePopupOpen}
@@ -93,19 +85,15 @@ function App() {
         name={'add-card'}
         form={'addCard'}
         title={'Новое место'}
-        buttonText={'Создать'}
-        children={(
-          <>
-            <fieldset className="popup__input-container">
-              <input className="popup__input" type="text" name="name" id="name-input-two" minLength="2" maxLength="30"
-                placeholder="Название" required />
-              <span className="popup__error name-input-error"></span>
-              <input className="popup__input" type="url" name="link" id="link-input" placeholder="Ссылка на картинку" required />
-              <span className="popup__error link-input-error"></span>
-            </fieldset>
-          </>
-        )}
-      />
+        buttonText={'Создать'}>
+        <fieldset className="popup__input-container">
+          <input className="popup__input" type="text" name="name" id="name-input-two" minLength="2" maxLength="30"
+            placeholder="Название" required />
+          <span className="popup__error name-input-error"></span>
+          <input className="popup__input" type="url" name="link" id="link-input" placeholder="Ссылка на картинку" required />
+          <span className="popup__error link-input-error"></span>
+        </fieldset>
+      </PopupWithForm>
 
       <ImagePopup
         card={selectedCard}
