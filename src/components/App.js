@@ -4,6 +4,9 @@ import Main from './Main';
 import Footer from './Footer';
 import PopupWithForm from './PopupWithForm';
 import ImagePopup from "./ImagePopup";
+import { useState, useEffect } from 'react';
+import { api } from '../utils/api';
+import { CurrentUserContext } from './../contexts/CurrentUserContext';
 
 function App() {
 
@@ -45,6 +48,7 @@ function App() {
   }
 
   return (
+    <CurrentUserContext.Provider value={currentUser}>
     <div className="page">
 
       <Header />
@@ -110,6 +114,7 @@ function App() {
       />
 
     </div>
+    </CurrentUserContext.Provider>
   );
 }
 
