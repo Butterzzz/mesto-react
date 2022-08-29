@@ -1,22 +1,15 @@
-import { useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { api } from '../utils/api';
+import {CurrentUserContext} from '../contexts/CurrentUserContext.js';
 import Card from "./Card";
 
 function Main({ onEditProfile, onAddPlace, onEditAvatar, onCardClick }) {
+    
+    const { name, about, avatar } = React.useContext(CurrentUserContext);
 
-    const [userName, setUserName] = useState('');
-    const [userDescription, setUserDescription] = useState('');
-    const [userAvatar, setUserAvatar] = useState('');
     const [cards, setCards] = useState([]);
 
     useEffect(() => {
-        api.getUserInfo()
-            .then((res) => {
-                setUserName(res.name);
-                setUserDescription(res.about);
-                setUserAvatar(res.avatar)
-            })
-            .catch((err) => { console.log(err) })
         api.getInitialCards()
             .then((card) => {
                 setCards(card);
@@ -29,14 +22,14 @@ function Main({ onEditProfile, onAddPlace, onEditAvatar, onCardClick }) {
 
             <section className="profile">
 
-                <img className="profile__image" src={userAvatar} alt="Изображение профиля" />
+                <img className="profile__image" src={avatar} alt="Изображение профиля" />
                 <button className="profile__button profile__button_action_edit-avatar" type="button" aria-label="Редактировать аватар" onClick={onEditAvatar}></button>
 
                 <div className="profile__info">
-                    <h1 className="profile__name">{userName}</h1>
+                    <h1 className="profile__name">{name}</h1>
                     <button className="profile__button profile__button_action_edit" type="button"
                         aria-label="Редактировать профиль" onClick={onEditProfile}></button>
-                    <p className="profile__about">{userDescription}</p>
+                    <p className="profile__about">{about}</p>
                 </div>
 
                 <button className="profile__button profile__button_action_add" type="button"
