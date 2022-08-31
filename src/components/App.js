@@ -3,6 +3,7 @@ import Header from './Header';
 import Main from './Main';
 import Footer from './Footer';
 import PopupWithForm from './PopupWithForm';
+import EditProfilePopup from './EditProfilePopup';
 import ImagePopup from "./ImagePopup";
 import { useState, useEffect } from 'react';
 import { api } from '../utils/api';
@@ -75,22 +76,7 @@ function App() {
           </fieldset>
         </PopupWithForm>
 
-        <PopupWithForm
-          isOpen={isEditProfilePopupOpen}
-          onClose={closeAllPopups}
-          name={'edit-profile'}
-          form={'editProfile'}
-          title={'Редактировать профиль'}
-          buttonText={'Сохранить'}>
-          <fieldset className="popup__input-container">
-            <input className="popup__input" type="text" name="name" id="name-input" minLength="2" maxLength="40"
-              placeholder="Имя" required />
-            <span className="popup__error name-input-error"></span>
-            <input className="popup__input" type="text" name="about" id="about-input" minLength="2" maxLength="200"
-              placeholder="О себе" required />
-            <span className="popup__error about-input-error"></span>
-          </fieldset>
-        </PopupWithForm>
+        <EditProfilePopup isOpen={isEditProfilePopupOpen} onClose={closeAllPopups} />
 
         <PopupWithForm
           isOpen={isAddPlacePopupOpen}
