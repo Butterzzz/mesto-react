@@ -19,27 +19,34 @@ function Main({ onEditProfile, onAddPlace, onEditAvatar, onCardClick }) {
 
     useEffect(() => {
         api.getUserInfo()
-          .then((userData) => {
-            setCurrentUser(userData);
-          })
-          .catch((err) => { console.log(err) })
-      }, [])
+            .then((userData) => {
+                setCurrentUser(userData);
+            })
+            .catch((err) => { console.log(err) })
+    }, [])
 
     function handleCardLike(card) {
         const isLiked = card.likes.some(i => i._id === currentUser._id);
-    
+
         if (!isLiked) {
-          api.addLike(card._id).then((newCard) => {
-            setCards((state) => state.map((c) => c._id === card._id ? newCard : c));
-          })
-            .catch((err) => console.log(err));
+            api.addLike(card._id).then((newCard) => {
+                setCards((state) => state.map((c) => c._id === card._id ? newCard : c));
+            })
+                .catch((err) => console.log(err));
         } else {
-          api.removeLike(card._id).then((newCard) => {
-            setCards((state) => state.map((c) => c._id === card._id ? newCard : c));
-          })
-            .catch((err) => console.log(err));
+            api.removeLike(card._id).then((newCard) => {
+                setCards((state) => state.map((c) => c._id === card._id ? newCard : c));
+            })
+                .catch((err) => console.log(err));
         }
-      }
+    }
+
+    function handleCardDelete(card) {
+        api.deleteCard(card._id).then(() => {
+            setCards((items) => items.filter((c) => c._id !== card._id && c));
+        })
+            .catch((err) => { console.log(err) });
+    }
 
     return (
         <main className="content">
@@ -73,6 +80,7 @@ function Main({ onEditProfile, onAddPlace, onEditAvatar, onCardClick }) {
                             likes={card.likes.length}
                             onCardClick={onCardClick}
                             onCardLike={handleCardLike}
+                            onCardDelete={handleCardDelete}
                         />
                     ))}
                 </ul>
