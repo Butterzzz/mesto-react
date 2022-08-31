@@ -5,7 +5,7 @@ import Footer from './Footer';
 import PopupWithForm from './PopupWithForm';
 import EditProfilePopup from './EditProfilePopup';
 import ImagePopup from "./ImagePopup";
-import { useState, useEffect } from 'react';
+import { useEffect } from 'react';
 import { api } from '../utils/api';
 import { CurrentUserContext } from './../contexts/CurrentUserContext';
 
@@ -15,7 +15,7 @@ function App() {
   const [isEditProfilePopupOpen, setIsEditProfilePopupOpen] = React.useState(false);
   const [isAddPlacePopupOpen, setIsAddPlacePopupOpen] = React.useState(false);
   const [selectedCard, setSelectedCard] = React.useState(null);
-  const [currentUser, setCurrentUser] = useState({});
+  const [currentUser, setCurrentUser] = React.useState({});
 
   useEffect(() => {
     api.getUserInfo()
@@ -48,6 +48,14 @@ function App() {
     setSelectedCard(null);
   }
 
+  function handleUpdateUser(userData) {
+    api.sendUserInfo(userData).then((userData) => {
+      setCurrentUser(userData);
+      closeAllPopups();
+    })
+    .catch((err) => { console.log(err) })
+  }
+
   return (
     <CurrentUserContext.Provider value={currentUser}>
       <div className="page">
@@ -76,7 +84,7 @@ function App() {
           </fieldset>
         </PopupWithForm>
 
-        <EditProfilePopup isOpen={isEditProfilePopupOpen} onClose={closeAllPopups} />
+        <EditProfilePopup isOpen={isEditProfilePopupOpen} onClose={closeAllPopups} onUpdateUser={handleUpdateUser} />
 
         <PopupWithForm
           isOpen={isAddPlacePopupOpen}
