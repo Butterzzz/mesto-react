@@ -2,9 +2,9 @@ import React from 'react';
 import Header from './Header';
 import Main from './Main';
 import Footer from './Footer';
-import PopupWithForm from './PopupWithForm';
 import EditProfilePopup from './EditProfilePopup';
 import EditAvatarPopup from './EditAvatarPopup';
+import AddPlacePopup from './AddPlacePopup';
 import ImagePopup from "./ImagePopup";
 import { useEffect, useState } from 'react';
 import { api } from '../utils/api';
@@ -120,21 +120,7 @@ function App() {
 
         <EditProfilePopup isOpen={isEditProfilePopupOpen} onClose={closeAllPopups} onUpdateUser={handleUpdateUser} />
 
-        <PopupWithForm
-          isOpen={isAddPlacePopupOpen}
-          onClose={closeAllPopups}
-          name={'add-card'}
-          form={'addCard'}
-          title={'Новое место'}
-          buttonText={'Создать'}>
-          <fieldset className="popup__input-container">
-            <input className="popup__input" type="text" name="name" id="name-input-two" minLength="2" maxLength="30"
-              placeholder="Название" required />
-            <span className="popup__error name-input-error"></span>
-            <input className="popup__input" type="url" name="link" id="link-input" placeholder="Ссылка на картинку" required />
-            <span className="popup__error link-input-error"></span>
-          </fieldset>
-        </PopupWithForm>
+        <AddPlacePopup isOpen={isAddPlacePopupOpen} onClose={closeAllPopups} />
 
         <ImagePopup
           card={selectedCard}
