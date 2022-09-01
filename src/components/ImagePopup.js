@@ -1,3 +1,5 @@
+import React from 'react';
+
 function ImagePopup({ card, name, onClose }) {
   return (
     <div className={`popup popup_type_${name} ${card && "popup_opened"}`}>
