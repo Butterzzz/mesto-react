@@ -2,7 +2,7 @@ import React, { useState, useContext, useEffect } from 'react';
 import { CurrentUserContext } from '../contexts/CurrentUserContext.js';
 import PopupWithForm from './PopupWithForm';
 
-function EditProfilePopup({ isOpen, onClose, onUpdateUser }) {
+function EditProfilePopup({ isOpen, onClose, onUpdateUser, isLoading }) {
 
     const currentUser = useContext(CurrentUserContext);
 
@@ -38,7 +38,7 @@ function EditProfilePopup({ isOpen, onClose, onUpdateUser }) {
             name={'edit-profile'}
             form={'editProfile'}
             title={'Редактировать профиль'}
-            buttonText={'Сохранить'}
+            buttonText={isLoading ? 'Сохраняем...' : 'Сохранить'}
             onSubmit={handleSubmit}>
             <fieldset className="popup__input-container">
                 <input className="popup__input" type="text" name="name" id="name-input" minLength="2" maxLength="40"

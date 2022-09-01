@@ -17,6 +17,8 @@ function App() {
   const [selectedCard, setSelectedCard] = React.useState(null);
   const [currentUser, setCurrentUser] = React.useState({});
   const [cards, setCards] = useState([]);
+  const [loading, setLoading] = useState(false);
+
 
   useEffect(() => {
     Promise.all([api.getUserInfo(), api.getInitialCards()]).then(([userData, cardsData]) => {
@@ -49,19 +51,23 @@ function App() {
   }
 
   function handleUpdateUser(userData) {
+    setLoading(true);
     api.sendUserInfo(userData).then((userData) => {
       setCurrentUser(userData);
       closeAllPopups();
     })
       .catch((err) => { console.log(err) })
+      .finally(() => { setLoading(false); })
   }
 
   function handleUpdateAvatar(userData) {
+    setLoading(true);
     api.sendUserAvatar(userData).then((userData) => {
       setCurrentUser(userData);
       closeAllPopups();
     })
       .catch((err) => { console.log(err) })
+      .finally(() => { setLoading(false); })
   }
 
   function handleCardLike(card) {
@@ -88,11 +94,13 @@ function App() {
   }
 
   function handleAddPlaceSubmit(newCard) {
+    setLoading(true);
     api.postCard(newCard).then((newCard) => {
       setCards([newCard, ...cards]);
       closeAllPopups();
     })
-      .catch((err) => { console.log(err) });
+      .catch((err) => { console.log(err) })
+      .finally(() => { setLoading(false); })
   }
 
   return (
@@ -117,18 +125,21 @@ function App() {
           isOpen={isEditAvatarPopupOpen}
           onClose={closeAllPopups}
           onUpdateAvatar={handleUpdateAvatar}
+          isLoading={loading}
         />
 
         <EditProfilePopup
           isOpen={isEditProfilePopupOpen}
           onClose={closeAllPopups}
           onUpdateUser={handleUpdateUser}
+          isLoading={loading}
         />
 
         <AddPlacePopup
           isOpen={isAddPlacePopupOpen}
           onClose={closeAllPopups}
           onAddPlace={handleAddPlaceSubmit}
+          isLoading={loading}
         />
 
         <ImagePopup
