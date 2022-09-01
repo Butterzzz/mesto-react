@@ -98,6 +98,14 @@ function App() {
       .catch((err) => { console.log(err) });
   }
 
+  function handleAddPlaceSubmit(newCard) {
+    api.postCard(newCard).then((newCard) => {
+      setCards([newCard, ...cards]);
+      closeAllPopups();
+    })
+      .catch((err) => { console.log(err) });
+  }
+
   return (
     <CurrentUserContext.Provider value={currentUser}>
       <div className="page">
@@ -120,7 +128,7 @@ function App() {
 
         <EditProfilePopup isOpen={isEditProfilePopupOpen} onClose={closeAllPopups} onUpdateUser={handleUpdateUser} />
 
-        <AddPlacePopup isOpen={isAddPlacePopupOpen} onClose={closeAllPopups} />
+        <AddPlacePopup isOpen={isAddPlacePopupOpen} onClose={closeAllPopups} onAddPlace={handleAddPlaceSubmit} />
 
         <ImagePopup
           card={selectedCard}
