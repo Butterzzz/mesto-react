@@ -23,6 +23,7 @@
     "type": "git",
     "url": "git+https://github.com/Butterzzz/mesto-react.git"
   },
+  "homepage": "(https://butterzzz.github.io/mesto-react/",
   "eslintConfig": {
     "extends": [
       "react-app",
