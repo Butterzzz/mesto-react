@@ -11,13 +11,13 @@ import ImagePopup from "./ImagePopup";
 
 function App() {
 
-  const [isEditAvatarPopupOpen, setIsEditAvatarPopupOpen] = React.useState(false);
-  const [isEditProfilePopupOpen, setIsEditProfilePopupOpen] = React.useState(false);
-  const [isAddPlacePopupOpen, setIsAddPlacePopupOpen] = React.useState(false);
-  const [selectedCard, setSelectedCard] = React.useState(null);
-  const [currentUser, setCurrentUser] = React.useState({});
+  const [isEditAvatarPopupOpen, setIsEditAvatarPopupOpen] = useState(false);
+  const [isEditProfilePopupOpen, setIsEditProfilePopupOpen] = useState(false);
+  const [isAddPlacePopupOpen, setIsAddPlacePopupOpen] = useState(false);
+  const [selectedCard, setSelectedCard] = useState(null);
+  const [currentUser, setCurrentUser] = useState({});
   const [cards, setCards] = useState([]);
-  const [loading, setLoading] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
 
 
   useEffect(() => {
@@ -51,23 +51,23 @@ function App() {
   }
 
   function handleUpdateUser(userData) {
-    setLoading(true);
+    setIsLoading(true);
     api.sendUserInfo(userData).then((userData) => {
       setCurrentUser(userData);
       closeAllPopups();
     })
       .catch((err) => { console.log(err) })
-      .finally(() => { setLoading(false); })
+      .finally(() => { setIsLoading(false); })
   }
 
   function handleUpdateAvatar(userData) {
-    setLoading(true);
+    setIsLoading(true);
     api.sendUserAvatar(userData).then((userData) => {
       setCurrentUser(userData);
       closeAllPopups();
     })
       .catch((err) => { console.log(err) })
-      .finally(() => { setLoading(false); })
+      .finally(() => { setIsLoading(false); })
   }
 
   function handleCardLike(card) {
@@ -94,13 +94,13 @@ function App() {
   }
 
   function handleAddPlaceSubmit(newCard) {
-    setLoading(true);
+    setIsLoading(true);
     api.postCard(newCard).then((newCard) => {
       setCards([newCard, ...cards]);
       closeAllPopups();
     })
       .catch((err) => { console.log(err) })
-      .finally(() => { setLoading(false); })
+      .finally(() => { setIsLoading(false); })
   }
 
   return (
@@ -125,21 +125,21 @@ function App() {
           isOpen={isEditAvatarPopupOpen}
           onClose={closeAllPopups}
           onUpdateAvatar={handleUpdateAvatar}
-          isLoading={loading}
+          isLoading={isLoading}
         />
 
         <EditProfilePopup
           isOpen={isEditProfilePopupOpen}
           onClose={closeAllPopups}
           onUpdateUser={handleUpdateUser}
-          isLoading={loading}
+          isLoading={isLoading}
         />
 
         <AddPlacePopup
           isOpen={isAddPlacePopupOpen}
           onClose={closeAllPopups}
           onAddPlace={handleAddPlaceSubmit}
-          isLoading={loading}
+          isLoading={isLoading}
         />
 
         <ImagePopup
